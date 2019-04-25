@@ -13,6 +13,7 @@
          [value]="todo?.text"
          [formControl]="textInput"
          (blur)="endEdition()"
+         (keyup.enter)="endEdition()"
          (keyup.esc)="endEdition()"
          #textInputReference>
 </li>

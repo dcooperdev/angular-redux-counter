@@ -1,4 +1,4 @@
-import { ToggleTodoAction } from './../todo.actions';
+import { ToggleTodoAction, EditTodoAction } from './../todo.actions';
 import { AppState } from './../../app.reducers';
 import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Todo } from '../model/todo.model';
@@ -53,11 +53,18 @@ export class TodoItemComponent implements OnInit, AfterViewInit {
       () => {
         this.textInputReference.nativeElement.select();
       }, 1
-    )
+    );
   }
 
   endEdition() {
     this.editing = false;
+
+    if ( this.textInput.invalid || this.textInput.value === this.todo.text ) {
+      return;
+    }
+
+    const action = new EditTodoAction( this.todo.id, this.textInput.value );
+    this.store.dispatch( action );
   }
 
 }
