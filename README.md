@@ -1,2 +1,2 @@
-# angular-redux-counter
-A simple exercise to coordinate components by state.
+# angular-redux-todos
+A simple exercise to manage todos by state.
