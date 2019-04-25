@@ -1,5 +1,5 @@
-import * as actions from "./todo.actions";
-import { Todo } from "./model/todo.model";
+import * as actions from './todo.actions';
+import { Todo } from './model/todo.model';
 
 const a = new Todo('Matar a Bruno');
 const b = new Todo('Conquistar el mundo');
@@ -10,10 +10,22 @@ a.completed = true;
 const initialState: Todo[] = [ a, b, c ];
 
 export function todoReducer( state = initialState, action: actions.Actions ): Todo[] {
-    switch( action.type ) {
+    switch ( action.type ) {
         case actions.ADD_TODO:
-            const todo = new Todo( action.text )
-            return [ ...state, todo ];
+          const todo = new Todo( action.text );
+          return [ ...state, todo ];
+
+        case actions.TOGGLE_TODO:
+          return state.map( todoEdit => {
+            if ( todoEdit.id === action.id ) {
+              return {
+                ...todoEdit,
+                completed: !todoEdit.completed
+              };
+            } else {
+              return todoEdit;
+            }
+          });
 
         default:
             return state;
