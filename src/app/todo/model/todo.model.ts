@@ -10,3 +10,9 @@ export class Todo {
         this.id = Math.random();
     }
 }
+
+export const TodoInitializer = {
+    id: 0,
+    text: '',
+    completed: false
+};

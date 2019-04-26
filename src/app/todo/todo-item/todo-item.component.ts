@@ -1,9 +1,9 @@
-import { ToggleTodoAction, EditTodoAction } from './../todo.actions';
-import { AppState } from './../../app.reducers';
-import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { Todo } from '../model/todo.model';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Todo, TodoInitializer } from '../model/todo.model';
+import { EditTodoAction, ToggleTodoAction } from './../todo.actions';
+import { AppState } from './../../app.reducers';
 
 @Component({
   selector: 'app-todo-item',
@@ -12,11 +12,11 @@ import { Store } from '@ngrx/store';
     .text-center { width: 100%; text-align: center; }
   `]
 })
-export class TodoItemComponent implements OnInit, AfterViewInit {
+export class TodoItemComponent implements OnInit {
 
   public ready_component: boolean;
 
-  @Input() todo: Todo;
+  @Input() todo: Todo = TodoInitializer;
   @ViewChild('textInputReference') textInputReference: ElementRef;
   checkField: FormControl;
   textInput: FormControl;
@@ -24,26 +24,20 @@ export class TodoItemComponent implements OnInit, AfterViewInit {
   public editing: boolean = false;
 
   constructor( private store: Store<AppState> ) {
-    this.ready_component = false;
+    this.ready_component = true;
+
+    this.checkField = new FormControl( this.todo.completed );
+    this.textInput = new FormControl( this.todo.text, Validators.required );
+
+    this.checkField.valueChanges.subscribe(
+      () => {
+        const action = new ToggleTodoAction( this.todo.id );
+        this.store.dispatch( action );
+      }
+    );
   }
 
   ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    setTimeout( () => {
-      this.ready_component = true;
-
-      this.checkField = new FormControl( this.todo.completed );
-      this.textInput = new FormControl( this.todo.text, Validators.required );
-
-      this.checkField.valueChanges.subscribe(
-        () => {
-          const action = new ToggleTodoAction( this.todo.id );
-          this.store.dispatch( action );
-        }
-      );
-    });
   }
 
   edit() {
