@@ -11,11 +11,13 @@ import { Todo } from '../model/todo.model';
 export class TodosListComponent implements OnInit {
 
   public todos: Todo[] = [];
+  public filter: string;
 
   constructor( private store: Store<AppState>) {
     this.store.subscribe(
       ( state ) => {
         this.todos = state.todos;
+        this.filter = state.filter;
       }
     );
   }
