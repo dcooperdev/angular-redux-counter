@@ -3,6 +3,7 @@ import * as filters from 'src/app/filter/filter.action';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducers';
 import { Todo } from '../model/todo.model';
+import { DeleteAllTodosCompletdAction } from '../todo.actions';
 
 @Component({
   selector: 'app-todo-footer',
@@ -29,6 +30,11 @@ export class TodoFooterComponent implements OnInit {
 
   changeFilter( filter: filters.ValidTypes ) {
     const action = new filters.SetFilterAction( filter );
+    this.store.dispatch( action );
+  }
+
+  deleteAllCompleted() {
+    const action = new DeleteAllTodosCompletdAction();
     this.store.dispatch( action );
   }
 
