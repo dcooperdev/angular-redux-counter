@@ -15,6 +15,9 @@ export function todoReducer( state = initialState, action: actions.Actions ): To
           const todo = new Todo( action.text );
           return [ ...state, todo ];
 
+        case actions.DELETE_TODO:
+          return state.filter( todoEdit => todoEdit.id !== action.id );
+
         case actions.TOGGLE_TODO:
           return state.map( todoEdit => {
             if ( todoEdit.id === action.id ) {

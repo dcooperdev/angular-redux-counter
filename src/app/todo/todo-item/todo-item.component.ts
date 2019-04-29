@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Todo, TodoInitializer } from '../model/todo.model';
-import { EditTodoAction, ToggleTodoAction } from './../todo.actions';
+import { EditTodoAction, ToggleTodoAction, DeleteTodoAction } from './../todo.actions';
 import { AppState } from './../../app.reducers';
 
 @Component({
@@ -58,6 +58,11 @@ export class TodoItemComponent implements OnInit {
     }
 
     const action = new EditTodoAction( this.todo.id, this.textInput.value );
+    this.store.dispatch( action );
+  }
+
+  deleteTodo() {
+    const action = new DeleteTodoAction( this.todo.id );
     this.store.dispatch( action );
   }
 
