@@ -1,9 +1,9 @@
 import * as actions from './todo.actions';
 import { Todo } from './model/todo.model';
 
-const a = new Todo('Matar a Bruno');
-const b = new Todo('Conquistar el mundo');
-const c = new Todo('Ser la única forma de vida inteligente');
+const a = new Todo('Conquistar el mundo');
+const b = new Todo('Ser la única forma de vida inteligente');
+const c = new Todo('Matar a John Connor');
 
 a.completed = true;
 

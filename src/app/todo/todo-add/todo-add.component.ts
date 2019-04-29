@@ -8,7 +8,14 @@ import * as actions from "../todo.actions";
 @Component({
   selector: 'app-todo-add',
   templateUrl: './todo-add.component.html',
-  styles: []
+  styles: [`
+    h1 {
+      color: #4682b44d;
+    }
+    h1 small {
+      font-size: 30px;
+    }
+  `]
 })
 export class TodoAddComponent implements OnInit {
 
@@ -24,7 +31,6 @@ export class TodoAddComponent implements OnInit {
     if ( !this.textInput.valid ) {
       return;
     }
-
 
     const action = new actions.AddTodoAction( this.textInput.value );
     this.store.dispatch( action );

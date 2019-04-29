@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducers';
 import { Todo } from '../model/todo.model';
@@ -8,23 +8,19 @@ import { Todo } from '../model/todo.model';
   templateUrl: './todos-list.component.html',
   styles: []
 })
-export class TodosListComponent implements OnInit, AfterViewInit {
+export class TodosListComponent implements OnInit {
 
   public todos: Todo[] = [];
 
-  constructor( private store: Store<AppState>) { }
-
-  ngOnInit() {
+  constructor( private store: Store<AppState>) {
+    this.store.subscribe(
+      ( state ) => {
+        this.todos = state.todos;
+      }
+    );
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.store.subscribe(
-        ( state ) => {
-          this.todos = state.todos;
-        }
-      );
-    });
+  ngOnInit() {
   }
 
 }
